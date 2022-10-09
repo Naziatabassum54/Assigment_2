@@ -1,0 +1,21 @@
+name: welcomeapp CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run:
+        echo "${{secrets.DOCKER_CREDS}}" | docker login -u "naziatabassum54" --password-stdin
+        docker build -t naziatabassum54/welcomeapp:v1 .
+        docker push naziatabassum54/welcomeapp:v1
